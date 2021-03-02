@@ -2,8 +2,9 @@
     <div>
         <input type="text" class="todo-input" placeholder="Add item here" v-model="newTodo" @keyup.enter="addTodo"/>
         <div v-for="todo in todos" :key="todo.id" class="todo-item">
+            <v-checkbox  v-model="todo.completed" ></v-checkbox>
             {{todo.title}}
-            <button>x</button>
+            <v-icon v-on:click="removeTodo(todo)" class="icon" color="red" right>mdi-minus-circle</v-icon>
         </div>
     </div>
 </template>
@@ -39,6 +40,10 @@ export default {
 
             this.newTodo = '';
             this.newId++;
+        },
+
+        removeTodo(todo) {
+            this.todos = this.todos.filter(todoItem => todoItem.id != todo.id)
         }
     }
 }
@@ -57,5 +62,13 @@ export default {
     justify-content: space-between;
     border: solid 1px;
     padding: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
 }
+
+.icon:hover {
+    cursor: pointer;
+}
+
+
 </style>
