@@ -1,7 +1,11 @@
 <template>
-    <div class="todo-item" :bind="{ 'is-selected': 'item.completed' }">
+    <div class="todo-item" >
         <v-checkbox v-model="item.completed" ></v-checkbox>
-        {{item.title}}
+        <input v-if="this.editing" />
+        <div v-else :class="{ completed: item.completed }">
+            {{this.title}}
+        </div>
+        <!-- TODO: Add edit icon with edit functionality -->
         <v-icon v-on:click="removeItem(item)" class="icon" color="red" right>mdi-minus-circle</v-icon>
     </div>
 </template>
@@ -12,6 +16,12 @@ export default {
     methods: {
         removeItem(item){
             this.$emit('remove-todo-item', item)
+        }
+    },
+    data() {
+        return {
+            editing: true,
+            title: this.item.title,
         }
     }
 };
@@ -28,11 +38,14 @@ export default {
     border-radius: 10px;
     margin-top: 20px;
     align-items: center;
-    background-color: cornsilk;
+    background-color: #fbfafa;
     width: 50vw;
 }
 
-.is-selected label {
+.completed {
     text-decoration: line-through;
+    font-style: italic;
+    color: rgb(107, 107, 107);
 }
+
 </style>

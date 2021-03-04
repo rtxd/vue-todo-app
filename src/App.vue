@@ -3,11 +3,9 @@
     <v-app-bar
       app
       absolute
-      color="pimary"
+      color="#7cc0f8"
       prominent
       dark
-      shrink-on-scroll
-      fade-img-on-scroll
       scroll-target="#scrolling-techniques-3"
     >
       <div class="d-flex align-center" id="header-container">
@@ -20,8 +18,6 @@
       <div id="container">
         <todo-list/>
       </div>
-      
-
     </v-main>
   </v-app>
 </template>
@@ -65,7 +61,5 @@ export default {
 .header {
   font-size: 30px;
   color: rgb(255, 255, 255);
-  display: flex;
-  justify-content: center;
 }
 </style>
