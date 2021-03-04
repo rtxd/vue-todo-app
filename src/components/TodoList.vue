@@ -1,16 +1,16 @@
 <template>
-    <div>
-        <input type="text" class="todo-input" placeholder="Add item here" v-model="newTodo" @keyup.enter="addTodo"/>
-        <div v-for="todo in todos" :key="todo.id" class="todo-item">
-            <v-checkbox  v-model="todo.completed" ></v-checkbox>
-            {{todo.title}}
-            <v-icon v-on:click="removeTodo(todo)" class="icon" color="red" right>mdi-minus-circle</v-icon>
+    <div class="container">
+        <input :v-if="this.todos.length >= 14" type="text" class="todo-input" placeholder="Add item here" v-model="newTodo" @keyup.enter="addTodo"/>
+        <div class="item-container" v-for="todo in todos" :key="todo.id">
+            <todo-item @remove-todo-item="handleRemoveTodo(todo)" v-bind:item="todo" />
         </div>
     </div>
 </template>
 
 <script>
+import TodoItem from './TodoItem.vue'
 export default {
+  components: { TodoItem },
     name: 'todo-list',
     data() {
         return {
@@ -27,11 +27,13 @@ export default {
     },
     methods: {
         addTodo(){
+            // If there is no text in text box then don't do anything
             if (this.newTodo.trim().length == 0)
             {
                 return
             }
 
+            // Add a todo item to the todo array
             this.todos.push({
                 id: this.newId,
                 title: this.newTodo,
@@ -42,7 +44,7 @@ export default {
             this.newId++;
         },
 
-        removeTodo(todo) {
+        handleRemoveTodo(todo) {
             this.todos = this.todos.filter(todoItem => todoItem.id != todo.id)
         }
     }
@@ -54,16 +56,26 @@ export default {
     width: 100%;
     padding: 10px 18px;
     font-size: 18px;
+    margin-top: 20px;
     margin-bottom: 16px;   
+    background-color: rgb(196, 250, 170);
+    border-radius: 10px;
+    
+
+    &:focus {
+        outline: 0;
+    }
 }
 
-.todo-item {
+.item-container {
     display: flex;
-    justify-content: space-between;
-    border: solid 1px;
-    padding: 10px;
-    border-radius: 10px;
-    margin-top: 20px;
+    justify-content: center;
+}
+
+.container {
+    background-color: white;
+    border-radius: 20px;
+    height: 98vh;
 }
 
 .icon:hover {
