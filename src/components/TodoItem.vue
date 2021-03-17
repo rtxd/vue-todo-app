@@ -1,12 +1,14 @@
 <template>
     <div class="todo-item" >
         <v-checkbox v-model="item.completed" ></v-checkbox>
-        <input v-if="this.editing" />
-        <div v-else :class="{ completed: item.completed }">
-            {{this.title}}
+        <v-text-field  autofocus v-show="this.editing" ref="editfield" @keyup.enter="toggleEdit" v-model="item.title"></v-text-field>
+        <div v-show="!this.editing" :class="{ completed: item.completed }" class="item-text">
+            {{item.title}}
         </div>
-        <!-- TODO: Add edit icon with edit functionality -->
-        <v-icon v-on:click="removeItem(item)" class="icon" color="red" right>mdi-minus-circle</v-icon>
+        <div>
+            <v-icon v-on:click="toggleEdit" class="icon" color="black" right>mdi-pencil</v-icon>
+            <v-icon v-on:click="removeItem(item)" class="icon" color="red" right>mdi-minus-circle</v-icon>
+        </div>
     </div>
 </template>
 
@@ -16,11 +18,17 @@ export default {
     methods: {
         removeItem(item){
             this.$emit('remove-todo-item', item)
+        },
+        toggleEdit() {
+            this.editing = !this.editing;                
+        },
+        mounted(){
+
         }
     },
     data() {
         return {
-            editing: true,
+            editing: false,
             title: this.item.title,
         }
     }
@@ -46,6 +54,17 @@ export default {
     text-decoration: line-through;
     font-style: italic;
     color: rgb(107, 107, 107);
+}
+
+.v-input {
+    text-align: center;
+}
+
+.item-text {
+    text-align: center;
+    width: 60%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 </style>

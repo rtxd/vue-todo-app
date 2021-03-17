@@ -1,9 +1,12 @@
 <template>
     <div class="container">
-        <input :v-if="this.todos.length >= 14" type="text" class="todo-input" placeholder="Add item here" v-model="newTodo" @keyup.enter="addTodo"/>
+        <v-text-field :v-if="this.todos.length >= 14" type="text" class="todo-input" placeholder="Add item here" v-model="newTodo" @keyup.enter="addTodo"/>
+        <!-- <input :v-if="this.todos.length >= 14" type="text" class="todo-input" placeholder="Add item here" v-model="newTodo" @keyup.enter="addTodo"/> -->
         <!-- Add all, active, completed to filter which todos to look at -->
-        <div class="item-container" v-for="todo in todos" :key="todo.id">
-            <todo-item @remove-todo-item="handleRemoveTodo(todo)" v-bind:item="todo" />
+        <div>
+            <div class="item-container" v-for="todo in todos" :key="todo.id">
+                <todo-item @remove-todo-item="handleRemoveTodo(todo)" v-bind:item="todo" />
+            </div>
         </div>
     </div>
 </template>
@@ -20,7 +23,7 @@ export default {
             todos: [
                 {
                     'id': 1,
-                    'title': 'First todo item',
+                    'title': 'add stuff to my checklist :)',
                     'completed': false
                 }
             ]
@@ -60,14 +63,14 @@ export default {
 
 <style lang="scss">
 .todo-input {
-    width: 100%;
+    max-height: 60px;
+    width: 80%;
     padding: 10px 18px;
     font-size: 18px;
     margin-top: 20px;
     margin-bottom: 16px;   
-    background-color: rgb(196, 250, 170);
+    background-color: rgb(199, 255, 172);
     border-radius: 10px;
-    
 
     &:focus {
         outline: 0;
@@ -80,6 +83,9 @@ export default {
 }
 
 .container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     margin-top: 10px;
     background-color: white;
     border-radius: 20px;
